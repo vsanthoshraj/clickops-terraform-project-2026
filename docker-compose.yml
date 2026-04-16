@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    image: clickops-dev-be:v2
+    container_name: clickops_backend
+    ports:
+      - "3000:3000"
+    environment:
+      - S3_BUCKET=clickops-s3-dev
+      - SECRET_NAME=clickops-sm-dev
+      - AWS_REGION=us-east-1
+      - MONGO_HOST=mongodb
+      - MONGO_PORT=27017
+      # IMPORTANT: If running locally without IAM roles or profile, uncomment and pass these to docker-compose!
+      # e.g., run `AWS_ACCESS_KEY_ID=xxx AWS_SECRET_ACCESS_KEY=yyy docker-compose up -d`
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+    depends_on:
+      - mongodb
+    networks:
+      - clickops-network
+
+  mongodb:
+    image: mongo:6.0
+    container_name: clickops_mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - clickops-network
+
+networks:
+  clickops-network:
+    driver: bridge
+
+volumes:
+  mongo-data:

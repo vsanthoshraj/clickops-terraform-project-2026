@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to ClickOps Terraform Project-2026</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to ClickOps Terraform Project-2026</h1>
+        <div class="card">
+            <form id="uploadForm">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required placeholder="Enter your full name">
+                </div>
+                
+                <div class="form-group">
+                    <label for="age">Age</label>
+                    <input type="number" id="age" name="age" required min="1" max="150" placeholder="Enter your age">
+                </div>
+
+                <div class="form-group">
+                    <label for="image">Profile Picture</label>
+                    <div class="file-input-wrapper">
+                        <input type="file" id="image" name="image" accept="image/*" required>
+                    </div>
+                </div>
+
+                <div id="message" class="message" style="display: none;"></div>
+
+                <div class="button-group">
+                    <button type="submit" class="btn primary" id="submitBtn">SUBMIT</button>
+                    <button type="button" class="btn secondary" id="cancelBtn">CANCEL</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
