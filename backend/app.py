@@ -39,7 +39,7 @@ def get_mongo_credentials():
     else:
         if 'SecretString' in get_secret_value_response:
             secret = json.loads(get_secret_value_response['SecretString'])
-            return secret.get('username'), secret.get('password')
+            return secret.get('mongodb_username'), secret.get('mongodb_password')
     return None, None
 
 def get_mongo_client():
@@ -56,6 +56,22 @@ def get_mongo_client():
 @app.route('/', methods=['GET'])
 def serve_index():
     return send_from_directory('frontend', 'index.html')
+
+@app.route('/api/health', methods=['GET'])
+def health_check():
+    db_status = 'Disconnected'
+    try:
+        client = get_mongo_client()
+        client.admin.command('ping')
+        db_status = 'Connected'
+    except Exception as e:
+        logger.warning(f"MongoDB health ping failed: {e}")
+        
+    return jsonify({
+        "message": "Online",
+        "database": db_status,
+        "environment": os.environ.get('APP_ENV', 'dev')
+    })
 
 @app.route('/<path:filename>', methods=['GET'])
 def serve_static(filename):

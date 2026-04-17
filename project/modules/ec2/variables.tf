@@ -1,0 +1,9 @@
+variable "env" {}
+variable "instance_type" {}
+variable "key_pair" {}
+variable "vpc_id" {}
+variable "public_subnet_id" {}
+variable "iam_instance_profile" {}
+variable "s3_bucket_name" {}
+variable "secret_name" {}
+variable "ecr_repo_url" {}
